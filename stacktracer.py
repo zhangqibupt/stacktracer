@@ -1,23 +1,48 @@
 import sublime,sublime_plugin
 import os.path
 
+stacktracer_current_paths = []
+stacktracer_current_index = 0
 class stacktracerCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
-		paths_string = "/Users/qzhang/GitLab/ui/ui/lib/data_model/app/models/user_workers/permission.rb:11:in `flatten'\n/Users/qzhang/GitLab/ui/ui/lib/data_model/app/models/user_workers/permission.rb:11:in `_permissions'\n/Users/qzhang/GitLab/ui/ui/lib/data_model/app/models/user_workers/permission.rb:7:in `permissions'\n/Users/qzhang/GitLab/ui/ui/lib/data_model/app/models/user_workers/permission.rb:20:in `has_all_permissions?'\n/Users/qzhang/GitLab/ui/ui/lib/data_model/app/models/user_workers/permission.rb:34:in `has_any_permission_in_module?'\n/Users/qzhang/GitLab/ui/ui/config/initializers/navigations.rb:4:in `blo2ck in <top (required)>'\n hahhaha"
-		self.paths_with_method = self.extract_valid_files(paths_string)
-		# self.paths_with_col = self.get_file_list(paths_string)
-		self.view.window().show_quick_panel(self.paths_with_method, self.on_highlighted, sublime.MONOSPACE_FONT,0, self.on_highlighted)
+		global stacktracer_current_paths, stacktracer_current_index
 
-	def extract_valid_files(self, paths_string):
-		file_paths = paths_string.splitlines()
+		file_paths_string = self.get_paths_string()
+		if file_paths_string :
+			stacktracer_current_paths = self.extract_valid_files(file_paths_string)
+			stacktracer_current_index = 0
+
+		if len(stacktracer_current_paths) > 0:
+			self.view.window().show_quick_panel(stacktracer_current_paths, self.on_done, sublime.MONOSPACE_FONT,stacktracer_current_index, self.on_highlighted)
+
+	def get_paths_string(self):
+		file_paths_string = ''
+		if len(self.view.sel()) > 0:
+			file_paths_string = self.view.substr(self.view.sel()[0])
+		return file_paths_string
+
+	def extract_valid_files(self, file_paths_string):
+		file_paths = list(map(lambda x: x.strip(), file_paths_string.splitlines()))
 		if not file_paths:
 			return []
+		# sublime.error_message(str(len(file_paths)))
 		return list(filter(lambda x: os.path.isfile(x.partition(':')[0]), file_paths))
 
 
 	def on_highlighted(self, index):
-		self.view.window().open_file(self.paths_with_method[index], sublime.ENCODED_POSITION, sublime.TRANSIENT)
+		global stacktracer_current_paths, stacktracer_current_index
+		stacktracer_current_index = index
+		sublime.active_window().open_file(stacktracer_current_paths[index], sublime.ENCODED_POSITION | sublime.TRANSIENT)
+
+	def on_done(self, index):
+		if index == -1: return
+
+		global stacktracer_current_paths, stacktracer_current_index
+		stacktracer_current_index = index
+		sublime.active_window().open_file(stacktracer_current_paths[index], sublime.ENCODED_POSITION)
+
+
 
 
 
