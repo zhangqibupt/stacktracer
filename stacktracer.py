@@ -3,7 +3,8 @@ import os.path
 
 stacktracer_current_paths = []
 stacktracer_current_index = 0
-class stacktracerCommand(sublime_plugin.TextCommand):
+
+class StackTracerCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
 		global stacktracer_current_paths, stacktracer_current_index
@@ -41,6 +42,22 @@ class stacktracerCommand(sublime_plugin.TextCommand):
 		global stacktracer_current_paths, stacktracer_current_index
 		stacktracer_current_index = index
 		sublime.active_window().open_file(stacktracer_current_paths[index], sublime.ENCODED_POSITION)
+
+class MoveToPreviousStackCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		global stacktracer_current_paths, stacktracer_current_index
+		if len(stacktracer_current_paths) > 0:
+			if stacktracer_current_index < len(stacktracer_current_paths) - 1:
+				stacktracer_current_index  = stacktracer_current_index + 1
+			sublime.active_window().open_file(stacktracer_current_paths[stacktracer_current_index], sublime.ENCODED_POSITION)
+
+class MoveToNextStackCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		global stacktracer_current_paths, stacktracer_current_index
+		if len(stacktracer_current_paths) > 0:
+			if stacktracer_current_index > 0:
+				stacktracer_current_index = stacktracer_current_index - 1
+			sublime.active_window().open_file(stacktracer_current_paths[stacktracer_current_index], sublime.ENCODED_POSITION)
 
 
 

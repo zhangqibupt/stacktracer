@@ -1,3 +1,5 @@
 [
-{ "keys": ["ctrl+alt+b"], "command": "stacktracer" },
+	{ "keys": ["ctrl+alt+b"], "command": "stacktracer" },
+	{ "keys": ["ctrl+alt+]"], "command": "movetonextstack" },
+	{ "keys": ["ctrl+alt+["], "command": "movetopreviousstack" },
 ]
