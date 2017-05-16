@@ -34,14 +34,14 @@ class StackTracerCommand(sublime_plugin.TextCommand):
 	def on_highlighted(self, index):
 		global stacktracer_current_paths, stacktracer_current_index
 		stacktracer_current_index = index
-		sublime.active_window().open_file(stacktracer_current_paths[index], sublime.ENCODED_POSITION | sublime.TRANSIENT)
+		sublime.active_window().open_file(':'.join(list(stacktracer_current_paths[index].split(':')[:2])), sublime.ENCODED_POSITION | sublime.TRANSIENT)
 
 	def on_done(self, index):
 		if index == -1: return
 
 		global stacktracer_current_paths, stacktracer_current_index
 		stacktracer_current_index = index
-		sublime.active_window().open_file(stacktracer_current_paths[index], sublime.ENCODED_POSITION)
+		sublime.active_window().open_file(':'.join(list(stacktracer_current_paths[index].split(':')[:2])), sublime.ENCODED_POSITION)
 
 class MoveToPreviousStackCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

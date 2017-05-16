@@ -1,5 +1,5 @@
 [
 	{ "keys": ["ctrl+alt+b"], "command": "stack_tracer" },
-	{ "keys": ["ctrl+alt+]"], "command": "movetonextstack" },
-	{ "keys": ["ctrl+alt+["], "command": "movetopreviousstack" }
+	{ "keys": ["ctrl+alt+]"], "command": "move_to_next_stack" },
+	{ "keys": ["ctrl+alt+["], "command": "move_to_previous_stack" }
 ]
