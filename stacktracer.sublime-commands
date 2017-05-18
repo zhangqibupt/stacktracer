@@ -1,0 +1,5 @@
+[
+  { "caption": "StackTracer: Build from selection", "command": "stack_tracer" },
+  { "caption": "StackTracer: Move backward", "command": "move_to_previous_stack" },
+  { "caption": "StackTracer: Move forward", "command": "move_to_next_stack" },
+]
