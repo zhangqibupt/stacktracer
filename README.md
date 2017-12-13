@@ -1,11 +1,11 @@
-#StackTracer
+# StackTracer
 
 --------------
 StackTracer is a sublime plugin to map `ruby` stack backtrace to source code and provide ability to jump between source code quickly.
 
 [![stack tracer](http://i4.buimg.com/519918/2ce6d6b1a6364837.png)](http://recordit.co/WajAtOauVO)
 
-##Usage
+## Usage
 1. install stacktracer: press `cmd+shift+p`, select `install package` and then choose 'stacktracer'
 2. new a file and paste stack backtrace to it, follow this format:
   ```
